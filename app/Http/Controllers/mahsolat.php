@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\mahsol as AppMahsol;
 use Illuminate\Http\Request;
 use App\mahsol;
+use Illuminate\Auth\Access\Response;
+
 class mahsolat extends Controller
 {
     /**
@@ -76,9 +78,17 @@ class mahsolat extends Controller
     {
 
         $data = mahsol::find($request->id);
-        $data ->mojodi= $data->mojodi - 1;
-        $data ->save();
-        return response()->json(["kharid shoma anjam shod ! "]);
+        if($data ->mojodi>0)
+        {
+            $data->mojodi = $data->mojodi - 1;
+            $data ->save();
+            return response()->json(["kharid shoma anjam shod ! "]);
+        }
+        else
+        {
+            return response()->json(["mahsol mojod nist ! "]);
+        }
+
         }
 
     /**
